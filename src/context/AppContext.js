@@ -1,10 +1,24 @@
 import React, { createContext, useReducer } from 'react';
 
 export const AppReducer = (state, action) => {
+    let newItems = [];
     switch(action.type) {
         case "CHG_LOCATION":
             state.globalLocation = action.payload;
-            return { ...state }
+            return { ...state };
+        
+        case "DELETE_QTY":
+            state.items.map((item) => {
+                if(item.itemName === action.payload) {
+                    item.quantity = 0;
+                }
+                newItems.push(item);
+            });
+            state.items = newItems;
+            return {...state};
+
+        case "ADD_QTY":
+            
     }
 }
 

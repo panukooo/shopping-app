@@ -15,6 +15,9 @@ function App() {
         <div>
             <Location />
         </div>
+        <div>
+            <ExpenseList />
+        </div>
     </AppProvider>
   );
 }
