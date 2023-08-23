@@ -4,36 +4,36 @@ import { AppContext } from '../context/AppContext';
 const ItemSelected = (props) => {
     const {dispatch} = useContext(AppContext);
 
-    const [item, setItem] = useState("");
-    const [action, setAction] = useState("");
-    const [value, setValue] = useState(0);
+    const [item, setItem] = useState("Shirt");
+    const [action, setAction] = useState("Add");
+    const [quantity, setQuantity] = useState("");
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const msg = {
+            name: item,
+            val: parseInt(quantity, 10)
+        }
+        //alert(`Ropa: ${item} Cantidad: ${quantity} Accion: ${action}`);
         if(action === "Add") {
-            let msg = {
-                name: item,
-                val: value
-            }
             dispatch({
                 type: "ADD_QTY",
                 payload: msg
             });
         }
         else {
-            let msg = {
-                name: item,
-                val: value
-            }
             dispatch({
                 type: "REDUCE_QTY",
                 payload: msg
             });
         }
+        setQuantity("");
     }
 
     return (
         <form>
-            <label for="items">Item</label>
+            <label htmlFor="items">Item</label>
             <select id="items" onChange={(itemVal) => setItem(itemVal.target.value)}>
                 <option value="Shirt">Shirt</option>
                 <option value="Jeans">Jeans</option>
@@ -41,12 +41,12 @@ const ItemSelected = (props) => {
                 <option value="Dress">Dress</option>
                 <option value="Shoes">Shoes</option>
             </select>
-            <label for="quantity">Quantity</label>
+            <label htmlFor="quantity">Quantity</label>
             <select id="quantity" onChange={(actionVal) => setAction(actionVal.target.value)}>
                 <option value="Add">Add</option>
                 <option value="Reduce">Reduce</option>
             </select>
-            <input type="number" onChange={(txtVal) => setValue(txtVal.target.value)}/>
+            <input type="number" value={quantity} required onChange={(txtQty) => setQuantity(txtQty.target.value)}/>
             <button onClick={handleSubmit}>Save</button>
         </form>
     )

@@ -18,6 +18,9 @@ function App() {
         <div>
             <ExpenseList />
         </div>
+        <div>
+            <ItemSelected />
+        </div>
     </AppProvider>
   );
 }

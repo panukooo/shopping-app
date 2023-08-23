@@ -18,7 +18,20 @@ export const AppReducer = (state, action) => {
             return {...state};
 
         case "ADD_QTY":
-            
+            state.items.map((item) => {
+                if(item.itemName === action.payload.name) {
+                    item.quantity += action.payload.val;
+                }
+            });
+            action.type = "DONE";
+            return {...state};
+        
+        case "REDUCE_QTY":
+            alert("reduce");
+            return {...state};
+
+        default: 
+            return state;
     }
 }
 
