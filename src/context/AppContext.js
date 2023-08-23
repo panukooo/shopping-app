@@ -1,20 +1,24 @@
 import React, { createContext, useReducer } from 'react';
 
 export const AppReducer = (state, action) => {
-
+    switch(action.type) {
+        case "CHG_LOCATION":
+            state.globalLocation = action.payload;
+            return { ...state }
+    }
 }
 
 const initialState = {
     cartValue: 0,
     globalLocation: "₽",
-    locations: [
+    /*locations: [
         {location: "Russia", simbol: "₽"},
         {location: "India", simbol: "₹"},
         {location: "Mexico", simbol: "$"},
         {location: "Europe", simbol: "€"},
         {location: "US", simbol: "$"},
         {location: "China", simbol: "¥"}
-    ],
+    ],*/
     items: [
         {itemName: "Shirt", price: 500, quantity: 0, total: 0},
         {itemName: "Jeans", price: 300, quantity: 0, total:0},
@@ -40,7 +44,8 @@ export const AppProvider = (props) => {
             items: state.items,
             cartValue: state.cartValue,
             dispatch,
-            globalLocation: state.globalLocation
+            globalLocation: state.globalLocation,
+            //locations: state.locations
         }}>
             {props.children}
         </AppContext.Provider>

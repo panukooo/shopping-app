@@ -12,6 +12,9 @@ function App() {
         <div className="App">
             <CartValue />
         </div>
+        <div>
+            <Location />
+        </div>
     </AppProvider>
   );
 }
