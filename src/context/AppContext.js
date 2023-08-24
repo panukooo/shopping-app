@@ -80,7 +80,8 @@ export const AppProvider = (props) => {
         return (total = total + item.price * item.quantity);
     }, 0);
 
-    state.cartValue = totalExpenses * state.exchange;
+    const toTwo = Math.pow(10, 2);
+    state.cartValue = Math.round(totalExpenses * state.exchange * toTwo) / toTwo;
 
     return (
         <AppContext.Provider value={{
