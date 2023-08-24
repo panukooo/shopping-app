@@ -5,8 +5,8 @@ const CartValue = () => {
     const {cartValue, globalLocation} = useContext(AppContext);
 
     return (
-        <div>
-            Cart Value {`${globalLocation}${cartValue}`}
+        <div className="alert alert-primary">
+            <span>Cart Value: {`${globalLocation}${cartValue}`}</span>
         </div>
     )
 };

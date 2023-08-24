@@ -9,17 +9,28 @@ import Location from './components/Location';
 function App() {
   return (
     <AppProvider>
-        <div className="App">
-            <CartValue />
-        </div>
-        <div>
-            <Location />
-        </div>
-        <div>
-            <ExpenseList />
-        </div>
-        <div>
-            <ItemSelected />
+        <div className="container">
+            <h1 className="mt-3">Shopping App</h1>
+            <div className="row mt-3">
+                <div className="col-sm">
+                    <CartValue />
+                </div>
+                <div className="col-sm">
+                    <Location />
+                </div>
+            </div>
+            <h2 className="mt-3">Shopping Cart</h2>
+            <div className="row">
+                <div className="col-sm">
+                    <ExpenseList />
+                </div>
+            </div>
+            <h2 className="mt-3">Add Item</h2>
+            <div className="row mt-3">
+                <div className="col-sm">
+                    <ItemSelected />
+                </div>
+            </div>
         </div>
     </AppProvider>
   );

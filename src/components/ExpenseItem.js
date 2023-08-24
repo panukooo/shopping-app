@@ -4,6 +4,9 @@ import { FaTimesCircle } from 'react-icons/fa';
 
 const ExpenseItem = (props) => {
     const {dispatch, globalLocation} = useContext(AppContext);
+    const roundTwo = Math.pow(10, 2);
+    const unitPrice = Math.round(props.price * props.exch * roundTwo) / roundTwo;
+    const finalPrice = Math.round(unitPrice * props.quantity * roundTwo) / roundTwo;
 
     const deleteQuantity = () => {
         dispatch({
@@ -16,9 +19,9 @@ const ExpenseItem = (props) => {
         <tr>
             <td>{props.name}</td>
             <td>{props.quantity}</td>
-            <td>{globalLocation}{props.price}</td>
-            <td>{globalLocation}{props.quantity * props.price}</td>
-            <td><FaTimesCircle onClick={deleteQuantity}/></td>
+            <td>{globalLocation}{unitPrice}</td>
+            <td>{globalLocation}{finalPrice}</td>
+            <td><FaTimesCircle size="1.5em" color="red" onClick={deleteQuantity}/></td>
         </tr>
     )
 };

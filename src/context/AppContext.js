@@ -4,7 +4,14 @@ export const AppReducer = (state, action) => {
     let newItems = [];
     switch(action.type) {
         case "CHG_LOCATION":
-            state.globalLocation = action.payload;
+            state.globalLocation = action.payload === "mx" ? "$" : action.payload;
+            state.exchangeList.map((exch) => {
+                if(exch.simbol === action.payload) {
+                    state.exchange = exch.taza;
+                }
+                return true
+            });
+            action.type = "DONE";
             return { ...state };
         
         case "DELETE_QTY":
@@ -13,6 +20,7 @@ export const AppReducer = (state, action) => {
                     item.quantity = 0;
                 }
                 newItems.push(item);
+                return true;
             });
             state.items = newItems;
             return {...state};
@@ -22,12 +30,19 @@ export const AppReducer = (state, action) => {
                 if(item.itemName === action.payload.name) {
                     item.quantity += action.payload.val;
                 }
+                return true;
             });
             action.type = "DONE";
             return {...state};
         
         case "REDUCE_QTY":
-            alert("reduce");
+            state.items.map((item) => {
+                if(item.itemName === action.payload.name) {
+                    item.quantity = item.quantity < action.payload.val ? 0 : item.quantity - action.payload.val; 
+                }
+                return true;
+            });
+            action.type = "DONE";
             return {...state};
 
         default: 
@@ -38,20 +53,21 @@ export const AppReducer = (state, action) => {
 const initialState = {
     cartValue: 0,
     globalLocation: "₽",
-    /*locations: [
-        {location: "Russia", simbol: "₽"},
-        {location: "India", simbol: "₹"},
-        {location: "Mexico", simbol: "$"},
-        {location: "Europe", simbol: "€"},
-        {location: "US", simbol: "$"},
-        {location: "China", simbol: "¥"}
-    ],*/
+    exchange: 94.3822,
     items: [
-        {itemName: "Shirt", price: 500, quantity: 0, total: 0},
-        {itemName: "Jeans", price: 300, quantity: 0, total:0},
-        {itemName: "T-Shirt", price: 150, quantity: 0, total: 0},
-        {itemName: "Dress", price: 820, quantity: 0, total:0},
-        {itemName: "Shoes", price: 746, quantity: 0, total:0}
+        {itemName: "Shirt", price: 500, quantity: 0},
+        {itemName: "Jeans", price: 300, quantity: 0},
+        {itemName: "T-Shirt", price: 150, quantity: 0},
+        {itemName: "Dress", price: 820, quantity: 0},
+        {itemName: "Shoes", price: 746, quantity: 0}
+    ],
+    exchangeList: [
+        {simbol: "₽", taza: 94.3822},
+        {simbol: "¥", taza: 7.2147},
+        {simbol: "€", taza: 0.9218},
+        {simbol: "mx", taza: 16.8503},
+        {simbol: "₹", taza: 82.7322},
+        {simbol: "$", taza: 1}
     ]
 };
 
@@ -64,7 +80,7 @@ export const AppProvider = (props) => {
         return (total = total + item.price * item.quantity);
     }, 0);
 
-    state.cartValue = totalExpenses;
+    state.cartValue = totalExpenses * state.exchange;
 
     return (
         <AppContext.Provider value={{
@@ -72,7 +88,7 @@ export const AppProvider = (props) => {
             cartValue: state.cartValue,
             dispatch,
             globalLocation: state.globalLocation,
-            //locations: state.locations
+            exchange: state.exchange
         }}>
             {props.children}
         </AppContext.Provider>

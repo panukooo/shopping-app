@@ -12,11 +12,11 @@ const Location = () => {
     }
 
     return (
-        <div>
+        <div className="alert alert-secondary">
             Location
             <select name="location" id="location" onChange={(change) => {selectOption(change.target.value)}}>
                 <option value="₽">Russia(₽)</option>
-                <option value="$">Mexico($)</option>
+                <option value="mx">Mexico($)</option>
                 <option value="₹">India(₹)</option>
                 <option value="¥">China(¥)</option>
                 <option value="€">Europe(€)</option>
